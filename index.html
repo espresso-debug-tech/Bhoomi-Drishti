@@ -1,0 +1,2710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bhoomi Drishti | Land Management System</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Icons -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+
+<script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAmPmgjPZgKJyDiLJR9vRYPuQi1Bj7VIJQ&callback=initMap"
+    async
+    defer>
+</script>
+
+<body>
+
+<!-- =========================================================
+     AUTHENTICATION
+========================================================= -->
+
+<section id="authPage" class="auth-page">
+
+    <div class="auth-left">
+
+        <div class="brand-large">
+            <div class="brand-icon">
+                <i class="fa-solid fa-landmark"></i>
+            </div>
+
+            <div>
+                <h1>BHOOMI <span>DRISHTI</span></h1>
+                <p>National Land Acquisition & Management System</p>
+            </div>
+        </div>
+
+        <div class="auth-description">
+            <h2>Digital Land Management for a Smarter India</h2>
+
+            <p>
+                A unified platform for transparent land acquisition,
+                project monitoring, land-owner services and
+                data-driven government decision making.
+            </p>
+
+            <div class="feature-list">
+                <div>
+                    <i class="fa-solid fa-map-location-dot"></i>
+                    <span>Digital Land Mapping</span>
+                </div>
+
+                <div>
+                    <i class="fa-solid fa-chart-line"></i>
+                    <span>Real-Time Project Monitoring</span>
+                </div>
+
+                <div>
+                    <i class="fa-solid fa-shield-halved"></i>
+                    <span>Transparent Land Management</span>
+                </div>
+
+                <div>
+                    <i class="fa-solid fa-brain"></i>
+                    <span>AI-Assisted Decision Support</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="auth-footer">
+            Smart India Hackathon Prototype
+        </div>
+
+    </div>
+
+
+    <div class="auth-right">
+
+        <div class="auth-card">
+
+            <!-- ROLE SELECTION -->
+
+            <div id="roleSelection">
+
+                <div class="auth-heading">
+                    <h2>Welcome to Bhoomi Drishti</h2>
+                    <p>Select your portal to continue</p>
+                </div>
+
+                <div class="role-cards">
+
+                    <button class="role-card"
+                            onclick="openLogin('government')">
+
+                        <div class="role-icon government-icon">
+                            <i class="fa-solid fa-building-columns"></i>
+                        </div>
+
+                        <div>
+                            <h3>Government Official</h3>
+                            <p>
+                                Access land acquisition,
+                                projects and analytics
+                            </p>
+                        </div>
+
+                        <i class="fa-solid fa-arrow-right"></i>
+
+                    </button>
+
+
+                    <button class="role-card"
+                            onclick="openLogin('landowner')">
+
+                        <div class="role-icon owner-icon">
+                            <i class="fa-solid fa-user"></i>
+                        </div>
+
+                        <div>
+                            <h3>Land Owner</h3>
+                            <p>
+                                Manage your land,
+                                applications and compensation
+                            </p>
+                        </div>
+
+                        <i class="fa-solid fa-arrow-right"></i>
+
+                    </button>
+
+                </div>
+
+                <div class="security-note">
+                    <i class="fa-solid fa-lock"></i>
+                    Secure Digital Land Management Portal
+                </div>
+
+            </div>
+
+
+            <!-- LOGIN FORM -->
+
+            <div id="loginSection" class="hidden">
+
+                <button class="back-btn" onclick="backToRoles()">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    Back
+                </button>
+
+                <div class="auth-heading">
+                    <h2 id="loginTitle">Login</h2>
+                    <p id="loginSubtitle">Access your portal</p>
+                </div>
+
+                <form id="loginForm">
+
+                    <div class="form-group">
+
+                        <label>Email / Unique ID</label>
+
+                        <div class="input-wrapper">
+                            <i class="fa-solid fa-user"></i>
+                            <input
+                                type="text"
+                                id="loginIdentifier"
+                                placeholder="Enter your email or ID"
+                                required>
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>Password</label>
+
+                        <div class="input-wrapper">
+                            <i class="fa-solid fa-lock"></i>
+
+                            <input
+                                type="password"
+                                id="loginPassword"
+                                placeholder="Enter password"
+                                required>
+
+                            <button type="button"
+                                    class="password-toggle"
+                                    onclick="togglePassword('loginPassword')">
+
+                                <i class="fa-solid fa-eye"></i>
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <button class="primary-btn" type="submit">
+                        LOGIN
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+
+                </form>
+
+
+                <div class="auth-switch">
+
+                    Don't have an account?
+
+                    <button onclick="openRegistration()">
+                        Register
+                    </button>
+
+                </div>
+
+                <div id="loginMessage" class="message"></div>
+
+            </div>
+
+
+            <!-- REGISTRATION -->
+
+            <div id="registrationSection" class="hidden">
+
+                <button class="back-btn" onclick="backToRoles()">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    Back
+                </button>
+
+                <div class="auth-heading">
+
+                    <h2 id="registerTitle">
+                        Create Account
+                    </h2>
+
+                    <p id="registerSubtitle">
+                        Register on Bhoomi Drishti
+                    </p>
+
+                </div>
+
+
+                <!-- GOVERNMENT REGISTRATION -->
+
+                <form id="governmentRegistration"
+                      class="registration-form hidden">
+
+                    <div class="form-row">
+
+                        <div class="form-group">
+
+                            <label>Department</label>
+
+                            <select id="govDepartment" required>
+
+                                <option value="">
+                                    Select Department
+                                </option>
+
+                                <option>
+                                    District Administration
+                                </option>
+
+                                <option>
+                                    Land & Land Reforms
+                                </option>
+
+                                <option>
+                                    Public Works Department
+                                </option>
+
+                                <option>
+                                    National Highways Authority
+                                </option>
+
+                                <option>
+                                    Railways
+                                </option>
+
+                                <option>
+                                    Urban Development
+                                </option>
+
+                                <option>
+                                    Rural Development
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>Government Position</label>
+
+                            <select id="govPosition" required>
+
+                                <option value="">
+                                    Select Position
+                                </option>
+
+                                <option>
+                                    District Officer
+                                </option>
+
+                                <option>
+                                    Land Acquisition Officer
+                                </option>
+
+                                <option>
+                                    Deputy Collector
+                                </option>
+
+                                <option>
+                                    Tehsildar
+                                </option>
+
+                                <option>
+                                    Survey Officer
+                                </option>
+
+                                <option>
+                                    Project Officer
+                                </option>
+
+                                <option>
+                                    Administrative Officer
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>Unique Government Official ID</label>
+
+                        <div class="input-wrapper">
+
+                            <i class="fa-solid fa-id-card"></i>
+
+                            <input
+                                type="text"
+                                id="govUniqueId"
+                                placeholder="Enter official ID"
+                                required>
+
+                        </div>
+
+                        <small class="field-help">
+                            Prototype verification: use GOV-2026-XXX
+                        </small>
+
+                    </div>
+
+
+                    <div class="form-row">
+
+                        <div class="form-group">
+
+                            <label>Full Name</label>
+
+                            <input
+                                type="text"
+                                id="govName"
+                                placeholder="Enter full name"
+                                required>
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label>Government ID</label>
+
+                            <input
+                                type="text"
+                                id="govId"
+                                placeholder="Enter government ID"
+                                required>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-row">
+
+                        <div class="form-group">
+
+                            <label>Gmail</label>
+
+                            <input
+                                type="email"
+                                id="govEmail"
+                                placeholder="example@gmail.com"
+                                required>
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label>Phone Number</label>
+
+                            <input
+                                type="tel"
+                                id="govPhone"
+                                placeholder="10 digit mobile number"
+                                maxlength="10"
+                                required>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>Create Password</label>
+
+                        <div class="input-wrapper">
+
+                            <i class="fa-solid fa-lock"></i>
+
+                            <input
+                                type="password"
+                                id="govPassword"
+                                placeholder="Create password"
+                                required>
+
+                            <button
+                                type="button"
+                                class="password-toggle"
+                                onclick="togglePassword('govPassword')">
+
+                                <i class="fa-solid fa-eye"></i>
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <button class="primary-btn" type="submit">
+
+                        VERIFY & CREATE ACCOUNT
+
+                        <i class="fa-solid fa-check"></i>
+
+                    </button>
+
+                </form>
+
+
+                <!-- LAND OWNER REGISTRATION -->
+
+                <form id="landownerRegistration"
+                      class="registration-form hidden">
+
+                    <div class="form-group">
+
+                        <label>Government ID</label>
+
+                        <div class="input-wrapper">
+
+                            <i class="fa-solid fa-id-card"></i>
+
+                            <input
+                                type="text"
+                                id="ownerGovId"
+                                placeholder="Enter government ID"
+                                required>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>Full Name</label>
+
+                        <div class="input-wrapper">
+
+                            <i class="fa-solid fa-user"></i>
+
+                            <input
+                                type="text"
+                                id="ownerName"
+                                placeholder="Enter your full name"
+                                required>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-row">
+
+                        <div class="form-group">
+
+                            <label>Phone Number</label>
+
+                            <input
+                                type="tel"
+                                id="ownerPhone"
+                                maxlength="10"
+                                placeholder="10 digit mobile number"
+                                required>
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label>Gmail</label>
+
+                            <input
+                                type="email"
+                                id="ownerEmail"
+                                placeholder="example@gmail.com"
+                                required>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>Create Password</label>
+
+                        <div class="input-wrapper">
+
+                            <i class="fa-solid fa-lock"></i>
+
+                            <input
+                                type="password"
+                                id="ownerPassword"
+                                placeholder="Create password"
+                                required>
+
+                            <button
+                                type="button"
+                                class="password-toggle"
+                                onclick="togglePassword('ownerPassword')">
+
+                                <i class="fa-solid fa-eye"></i>
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <button class="primary-btn" type="submit">
+
+                        CREATE LAND OWNER ACCOUNT
+
+                        <i class="fa-solid fa-check"></i>
+
+                    </button>
+
+                </form>
+
+
+                <div class="auth-switch">
+
+                    Already registered?
+
+                    <button onclick="openLogin(currentRole)">
+                        Login
+                    </button>
+
+                </div>
+
+                <div id="registerMessage" class="message"></div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     GOVERNMENT APPLICATION
+========================================================= -->
+
+<section id="governmentApp" class="application hidden">
+
+    <div class="sidebar-overlay" onclick="closeSidebar('governmentApp')"></div>
+
+    <aside class="sidebar">
+
+        <div class="sidebar-brand">
+
+            <div class="mini-logo">
+                <i class="fa-solid fa-landmark"></i>
+            </div>
+
+            <div>
+                <strong>BHOOMI</strong>
+                <span>DRISHTI</span>
+            </div>
+
+            <button class="sidebar-close" onclick="closeSidebar('governmentApp')">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+        </div>
+
+
+        <div class="user-box">
+
+            <div class="user-avatar">
+                <i class="fa-solid fa-building-columns"></i>
+            </div>
+
+            <div>
+                <strong id="govUserName">
+                    Government Official
+                </strong>
+
+                <small id="govUserDepartment">
+                    Government
+                </small>
+            </div>
+
+        </div>
+
+
+        <nav class="sidebar-nav">
+
+            <p class="nav-label">MAIN</p>
+
+            <button class="nav-item active"
+                    data-page="govDashboard">
+
+                <i class="fa-solid fa-chart-pie"></i>
+                Dashboard
+
+            </button>
+
+
+            <button class="nav-item"
+                    data-page="landMap">
+
+                <i class="fa-solid fa-map"></i>
+                Land Map
+
+            </button>
+
+
+            <button class="nav-item"
+                    data-page="projects">
+
+                <i class="fa-solid fa-diagram-project"></i>
+                Projects
+
+            </button>
+
+
+            <button class="nav-item"
+                    data-page="acquisition">
+
+                <i class="fa-solid fa-file-signature"></i>
+                Acquisition
+
+            </button>
+
+
+            <button class="nav-item"
+                    data-page="owners">
+
+                <i class="fa-solid fa-users"></i>
+                Land Owners
+
+            </button>
+
+
+            <button class="nav-item"
+                    data-page="conflicts">
+
+                <i class="fa-solid fa-triangle-exclamation"></i>
+                Conflicts
+
+            </button>
+
+
+            <p class="nav-label">ANALYTICS</p>
+
+
+            <button class="nav-item"
+                    data-page="reports">
+
+                <i class="fa-solid fa-chart-column"></i>
+                Reports
+
+            </button>
+
+
+            <button class="nav-item"
+                    data-page="aiInsights">
+
+                <i class="fa-solid fa-brain"></i>
+                AI Insights
+
+            </button>
+
+
+            <button class="nav-item"
+                    data-page="settings">
+
+                <i class="fa-solid fa-gear"></i>
+                Settings
+
+            </button>
+
+        </nav>
+
+
+        <button class="logout-btn" onclick="logout()">
+
+            <i class="fa-solid fa-right-from-bracket"></i>
+
+            Logout
+
+        </button>
+
+    </aside>
+
+
+    <main class="main-content">
+
+        <header class="topbar">
+
+            <div>
+
+                <button class="mobile-menu">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+
+                <h2 id="pageTitle">
+                    Government Dashboard
+                </h2>
+
+                <p id="pageSubtitle">
+                    National land acquisition overview
+                </p>
+
+            </div>
+
+
+            <div class="topbar-right">
+
+                <div class="notification-wrapper">
+
+                    <button class="notification-btn"
+                            onclick="toggleNotificationDropdown('government')">
+
+                        <i class="fa-regular fa-bell"></i>
+
+                        <span>3</span>
+
+                    </button>
+
+                    <div id="govNotificationDropdown"
+                         class="notification-dropdown hidden">
+                    </div>
+
+                </div>
+
+                <div class="top-profile">
+
+                    <div class="user-avatar small">
+                        <i class="fa-solid fa-building-columns"></i>
+                    </div>
+
+                    <span id="topGovName">
+                        Official
+                    </span>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <div id="govPageContent">
+
+            <!-- DASHBOARD -->
+
+            <div id="govDashboard" class="page-section active-page">
+
+                <div class="welcome-banner">
+
+                    <div>
+
+                        <p>Government Portal</p>
+
+                        <h1>
+                            Welcome back, <span id="welcomeGovName">
+                            Official
+                            </span>
+                        </h1>
+
+                        <span>
+                            Monitor land acquisition and
+                            infrastructure projects.
+                        </span>
+
+                    </div>
+
+                    <i class="fa-solid fa-map-location-dot"></i>
+
+                </div>
+
+
+                <div class="stats-grid">
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon">
+                            <i class="fa-solid fa-map"></i>
+                        </div>
+
+                        <div>
+                            <span>Total Land Parcels</span>
+                            <strong>24,856</strong>
+                            <small>+4.8% this month</small>
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon">
+                            <i class="fa-solid fa-diagram-project"></i>
+                        </div>
+
+                        <div>
+                            <span>Active Projects</span>
+                            <strong>128</strong>
+                            <small>18 require attention</small>
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon">
+                            <i class="fa-solid fa-file-circle-check"></i>
+                        </div>
+
+                        <div>
+                            <span>Acquisition Cases</span>
+                            <strong>3,842</strong>
+                            <small>76% processed</small>
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon warning">
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                        </div>
+
+                        <div>
+                            <span>Pending Conflicts</span>
+                            <strong>47</strong>
+                            <small>12 high priority</small>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="dashboard-grid">
+
+                    <div class="panel large-panel">
+
+                        <div class="panel-header">
+
+                            <div>
+                                <h3>Land Acquisition Overview</h3>
+                                <p>Current state-wise progress</p>
+                            </div>
+
+                            <button class="outline-btn"
+                                    onclick="showPage('reports')">
+
+                                View Report
+
+                            </button>
+
+                        </div>
+
+
+                        <div class="progress-list">
+
+                            <div class="progress-item">
+
+                                <div>
+                                    <span>West Bengal</span>
+                                    <strong>82%</strong>
+                                </div>
+
+                                <div class="progress-bar">
+                                    <span style="width:82%"></span>
+                                </div>
+
+                            </div>
+
+
+                            <div class="progress-item">
+
+                                <div>
+                                    <span>Maharashtra</span>
+                                    <strong>68%</strong>
+                                </div>
+
+                                <div class="progress-bar">
+                                    <span style="width:68%"></span>
+                                </div>
+
+                            </div>
+
+
+                            <div class="progress-item">
+
+                                <div>
+                                    <span>Uttar Pradesh</span>
+                                    <strong>61%</strong>
+                                </div>
+
+                                <div class="progress-bar">
+                                    <span style="width:61%"></span>
+                                </div>
+
+                            </div>
+
+
+                            <div class="progress-item">
+
+                                <div>
+                                    <span>Karnataka</span>
+                                    <strong>54%</strong>
+                                </div>
+
+                                <div class="progress-bar">
+                                    <span style="width:54%"></span>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="panel">
+
+                        <div class="panel-header">
+
+                            <div>
+                                <h3>AI Risk Alerts</h3>
+                                <p>Requires attention</p>
+                            </div>
+
+                        </div>
+
+
+                        <div class="alert-list">
+
+                            <div class="alert-item high">
+
+                                <i class="fa-solid fa-circle-exclamation"></i>
+
+                                <div>
+                                    <strong>Ownership Conflict</strong>
+                                    <span>NH-12 Project</span>
+                                </div>
+
+                            </div>
+
+
+                            <div class="alert-item medium">
+
+                                <i class="fa-solid fa-circle-exclamation"></i>
+
+                                <div>
+                                    <strong>Environmental Risk</strong>
+                                    <span>Industrial Corridor</span>
+                                </div>
+
+                            </div>
+
+
+                            <div class="alert-item low">
+
+                                <i class="fa-solid fa-circle-info"></i>
+
+                                <div>
+                                    <strong>Documentation Delay</strong>
+                                    <span>Metro Expansion</span>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- LAND MAP -->
+
+            <div id="landMap" class="page-section">
+
+                <div class="page-header">
+
+                    <div>
+                        <h2>National Land Map</h2>
+                        <p>Explore and monitor registered land parcels</p>
+                    </div>
+
+                    <button class="primary-small"
+                            onclick="notifyUser('Map data refreshed successfully.')">
+
+                        <i class="fa-solid fa-rotate"></i>
+                        Refresh
+
+                    </button>
+
+                </div>
+
+
+                <div class="map-panel">
+
+                    <div class="map-mode-tabs">
+
+                        <button id="tabSearchNearby"
+                                class="map-mode-tab active"
+                                onclick="switchMapMode('nearby')">
+
+                            <i class="fa-solid fa-location-dot"></i>
+                            Search Nearby
+
+                        </button>
+
+                        <button id="tabPlanRoute"
+                                class="map-mode-tab"
+                                onclick="switchMapMode('route')">
+
+                            <i class="fa-solid fa-route"></i>
+                            Plan a Route
+
+                        </button>
+
+                    </div>
+
+
+                    <div id="nearbySearchForm" class="map-toolbar">
+
+                        <input type="text"
+                               placeholder="Search location (e.g. Kolkata, Ranchi)..."
+                               id="mapSearch">
+
+                        <select id="mapRadius">
+                            <option value="10">10 km</option>
+                            <option value="25" selected>25 km</option>
+                            <option value="50">50 km</option>
+                            <option value="100">100 km</option>
+                            <option value="250">250 km</option>
+                        </select>
+
+                        <button onclick="searchMap()">
+                            <i class="fa-solid fa-search"></i>
+                        </button>
+
+                    </div>
+
+
+                    <div id="routePlanForm" class="map-toolbar route-toolbar hidden">
+
+                        <input type="text"
+                               placeholder="From (e.g. Kolkata)"
+                               id="routeFrom">
+
+                        <input type="text"
+                               placeholder="To (e.g. Durgapur)"
+                               id="routeTo">
+
+                        <select id="routeCorridor">
+                            <option value="5">5 km corridor</option>
+                            <option value="10" selected>10 km corridor</option>
+                            <option value="20">20 km corridor</option>
+                        </select>
+
+                        <button onclick="planRoute()">
+                            <i class="fa-solid fa-route"></i>
+                        </button>
+
+                    </div>
+                    <div id="map">
+
+                    </div>
+
+                    <div class="fake-map">
+
+                        <div class="map-india">
+                            <i class="fa-solid fa-location-dot marker marker1"></i>
+                            <i class="fa-solid fa-location-dot marker marker2"></i>
+                            <i class="fa-solid fa-location-dot marker marker3"></i>
+                            <i class="fa-solid fa-location-dot marker marker4"></i>
+
+                            <div class="india-label">
+                                INDIA
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="map-legend">
+
+                        <span>
+                            <i class="dot green"></i>
+                            Verified
+                        </span>
+
+                        <span>
+                            <i class="dot orange"></i>
+                            Under Acquisition
+                        </span>
+
+                        <span>
+                            <i class="dot red"></i>
+                            Conflict
+                        </span>
+
+                    </div>
+
+                    <div id="plotResults" class="plot-results"></div>
+
+                </div>
+
+            </div>
+
+
+            <!-- PROJECTS -->
+
+            <div id="projects" class="page-section">
+
+                <div class="page-header">
+
+                    <div>
+                        <h2>Infrastructure Projects</h2>
+                        <p>Monitor ongoing land acquisition projects</p>
+                    </div>
+
+                    <button class="primary-small"
+                            onclick="openProjectModal()">
+
+                        <i class="fa-solid fa-plus"></i>
+                        New Project
+
+                    </button>
+
+                </div>
+
+
+                <div class="table-panel">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+                                <th>Project ID</th>
+                                <th>Project Name</th>
+                                <th>Location</th>
+                                <th>Required Area</th>
+                                <th>Progress</th>
+                                <th>Status</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            <tr>
+                                <td>PRJ-001</td>
+                                <td>National Highway Expansion</td>
+                                <td>West Bengal</td>
+                                <td>1,240 Acres</td>
+                                <td>82%</td>
+                                <td><span class="status success">On Track</span></td>
+                            </tr>
+
+                            <tr>
+                                <td>PRJ-002</td>
+                                <td>Eastern Freight Corridor</td>
+                                <td>Uttar Pradesh</td>
+                                <td>2,850 Acres</td>
+                                <td>67%</td>
+                                <td><span class="status success">On Track</span></td>
+                            </tr>
+
+                            <tr>
+                                <td>PRJ-003</td>
+                                <td>Metro Expansion Phase II</td>
+                                <td>Maharashtra</td>
+                                <td>780 Acres</td>
+                                <td>49%</td>
+                                <td><span class="status warning-status">Delayed</span></td>
+                            </tr>
+
+                            <tr>
+                                <td>PRJ-004</td>
+                                <td>Industrial Corridor</td>
+                                <td>Karnataka</td>
+                                <td>3,100 Acres</td>
+                                <td>38%</td>
+                                <td><span class="status danger">At Risk</span></td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+
+            <!-- ACQUISITION -->
+
+            <div id="acquisition" class="page-section">
+
+                <div class="page-header">
+
+                    <div>
+                        <h2>Land Acquisition</h2>
+                        <p>Track acquisition cases and approvals</p>
+                    </div>
+
+                </div>
+
+
+                <div class="stats-grid small">
+
+                    <div class="mini-stat">
+                        <span>Under Review</span>
+                        <strong>1,284</strong>
+                    </div>
+
+                    <div class="mini-stat">
+                        <span>Verified</span>
+                        <strong>962</strong>
+                    </div>
+
+                    <div class="mini-stat">
+                        <span>Compensation Pending</span>
+                        <strong>418</strong>
+                    </div>
+
+                    <div class="mini-stat">
+                        <span>Completed</span>
+                        <strong>1,178</strong>
+                    </div>
+
+                </div>
+
+
+                <div class="table-panel">
+
+                    <table>
+
+                        <thead>
+                            <tr>
+                                <th>Case ID</th>
+                                <th>Land Owner</th>
+                                <th>Project</th>
+                                <th>Area</th>
+                                <th>Stage</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            <tr>
+                                <td>ACQ-10231</td>
+                                <td>Rajesh Kumar</td>
+                                <td>NH Expansion</td>
+                                <td>2.4 Acres</td>
+                                <td>Compensation</td>
+                                <td><span class="status warning-status">Pending</span></td>
+                            </tr>
+
+                            <tr>
+                                <td>ACQ-10232</td>
+                                <td>Anita Das</td>
+                                <td>Metro Phase II</td>
+                                <td>1.8 Acres</td>
+                                <td>Verification</td>
+                                <td><span class="status success">Verified</span></td>
+                            </tr>
+
+                            <tr>
+                                <td>ACQ-10233</td>
+                                <td>Mohammed Ali</td>
+                                <td>Freight Corridor</td>
+                                <td>4.1 Acres</td>
+                                <td>Survey</td>
+                                <td><span class="status">In Progress</span></td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+
+            <!-- LAND OWNERS -->
+
+            <div id="owners" class="page-section">
+
+                <div class="page-header">
+
+                    <div>
+                        <h2>Land Owners</h2>
+                        <p>Registered land owners and verification status</p>
+                    </div>
+
+                    <input class="search-input"
+                           placeholder="Search owner..."
+                           onkeyup="searchTable(this, 'ownersTable')">
+
+                </div>
+
+
+                <div class="table-panel">
+
+                    <table id="ownersTable">
+
+                        <thead>
+                            <tr>
+                                <th>Owner ID</th>
+                                <th>Name</th>
+                                <th>Location</th>
+                                <th>Parcels</th>
+                                <th>Verification</th>
+                                <th>Acquisition</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            <tr>
+                                <td>OWN-001</td>
+                                <td>Rajesh Kumar</td>
+                                <td>Maheshtala, WB</td>
+                                <td>3</td>
+                                <td><span class="status success">Verified</span></td>
+                                <td>1 Active</td>
+                            </tr>
+
+                            <tr>
+                                <td>OWN-002</td>
+                                <td>Anita Das</td>
+                                <td>Kolkata, WB</td>
+                                <td>2</td>
+                                <td><span class="status success">Verified</span></td>
+                                <td>1 Active</td>
+                            </tr>
+
+                            <tr>
+                                <td>OWN-003</td>
+                                <td>Mohammed Ali</td>
+                                <td>Lucknow, UP</td>
+                                <td>5</td>
+                                <td><span class="status warning-status">Pending</span></td>
+                                <td>2 Active</td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+
+            <!-- CONFLICTS -->
+
+            <div id="conflicts" class="page-section">
+
+                <div class="page-header">
+
+                    <div>
+                        <h2>Land Conflicts</h2>
+                        <p>AI-assisted identification of potential conflicts</p>
+                    </div>
+
+                </div>
+
+
+                <div class="conflict-grid">
+
+                    <div class="conflict-card high">
+
+                        <div class="conflict-icon">
+                            <i class="fa-solid fa-gavel"></i>
+                        </div>
+
+                        <div>
+                            <h3>Ownership Dispute</h3>
+                            <p>NH-12 Expansion</p>
+                            <span>High Priority</span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="conflict-card medium">
+
+                        <div class="conflict-icon">
+                            <i class="fa-solid fa-tree"></i>
+                        </div>
+
+                        <div>
+                            <h3>Environmental Restriction</h3>
+                            <p>Industrial Corridor</p>
+                            <span>Medium Priority</span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="conflict-card low">
+
+                        <div class="conflict-icon">
+                            <i class="fa-solid fa-ruler-combined"></i>
+                        </div>
+
+                        <div>
+                            <h3>Boundary Mismatch</h3>
+                            <p>Metro Expansion</p>
+                            <span>Low Priority</span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- REPORTS -->
+
+            <div id="reports" class="page-section">
+
+                <div class="page-header">
+
+                    <div>
+                        <h2>Reports & Analytics</h2>
+                        <p>National land acquisition statistics</p>
+                    </div>
+
+                    <button class="primary-small"
+                            onclick="notifyUser('Report generated successfully.')">
+
+                        <i class="fa-solid fa-download"></i>
+                        Generate Report
+
+                    </button>
+
+                </div>
+
+
+                <div class="report-grid">
+
+                    <div class="report-card">
+                        <i class="fa-solid fa-map"></i>
+                        <strong>24,856</strong>
+                        <span>Total Land Parcels</span>
+                    </div>
+
+                    <div class="report-card">
+                        <i class="fa-solid fa-building"></i>
+                        <strong>128</strong>
+                        <span>Active Projects</span>
+                    </div>
+
+                    <div class="report-card">
+                        <i class="fa-solid fa-indian-rupee-sign"></i>
+                        <strong>₹4,280 Cr</strong>
+                        <span>Estimated Compensation</span>
+                    </div>
+
+                    <div class="report-card">
+                        <i class="fa-solid fa-clock"></i>
+                        <strong>76%</strong>
+                        <span>Processing Efficiency</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- AI INSIGHTS -->
+
+            <div id="aiInsights" class="page-section">
+
+                <div class="page-header">
+
+                    <div>
+                        <h2>AI Decision Support</h2>
+                        <p>AI-assisted land acquisition recommendations</p>
+                    </div>
+
+                    <button class="primary-small"
+                            onclick="runAIAnalysis()">
+
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                        Run Analysis
+
+                    </button>
+
+                </div>
+
+
+                <div class="ai-banner">
+
+                    <i class="fa-solid fa-brain"></i>
+
+                    <div>
+
+                        <h2>AI Land Suitability Analysis</h2>
+
+                        <p>
+                            The system can evaluate ownership complexity,
+                            environmental restrictions, infrastructure
+                            proximity, estimated cost and acquisition risk.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="ai-grid">
+
+                    <div class="ai-card">
+                        <span>Land Suitability</span>
+                        <strong>91%</strong>
+                        <div class="progress-bar">
+                            <span style="width:91%"></span>
+                        </div>
+                    </div>
+
+                    <div class="ai-card">
+                        <span>Ownership Complexity</span>
+                        <strong>18%</strong>
+                        <div class="progress-bar">
+                            <span style="width:18%"></span>
+                        </div>
+                    </div>
+
+                    <div class="ai-card">
+                        <span>Environmental Risk</span>
+                        <strong>24%</strong>
+                        <div class="progress-bar">
+                            <span style="width:24%"></span>
+                        </div>
+                    </div>
+
+                    <div class="ai-card">
+                        <span>Estimated Acquisition Time</span>
+                        <strong>7.4 Months</strong>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- SETTINGS -->
+
+            <div id="settings" class="page-section">
+
+                <div class="page-header">
+
+                    <div>
+                        <h2>Settings</h2>
+                        <p>Portal and account settings</p>
+                    </div>
+
+                </div>
+
+
+                <div class="settings-panel">
+
+                    <div class="setting-row">
+
+                        <div>
+                            <strong>Profile</strong>
+                            <span>Manage official information</span>
+                        </div>
+
+                        <button class="outline-btn"
+                                onclick="notifyUser('Profile settings opened.')">
+                            Manage
+                        </button>
+
+                    </div>
+
+
+                    <div class="setting-row">
+
+                        <div>
+                            <strong>Notifications</strong>
+                            <span>Configure alerts and updates</span>
+                        </div>
+
+                        <button class="outline-btn"
+                                onclick="notifyUser('Notification settings opened.')">
+                            Configure
+                        </button>
+
+                    </div>
+
+
+                    <div class="setting-row">
+
+                        <div>
+                            <strong>Security</strong>
+                            <span>Account security preferences</span>
+                        </div>
+
+                        <button class="outline-btn"
+                                onclick="notifyUser('Security settings opened.')">
+                            Manage
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+</section>
+
+
+<!-- =========================================================
+     LAND OWNER APPLICATION
+========================================================= -->
+
+<section id="landownerApp" class="application hidden">
+
+    <div class="sidebar-overlay" onclick="closeSidebar('landownerApp')"></div>
+
+    <aside class="sidebar owner-sidebar">
+
+        <div class="sidebar-brand">
+
+            <div class="mini-logo">
+                <i class="fa-solid fa-seedling"></i>
+            </div>
+
+            <div>
+                <strong>BHOOMI</strong>
+                <span>DRISHTI</span>
+            </div>
+
+            <button class="sidebar-close" onclick="closeSidebar('landownerApp')">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+        </div>
+
+
+        <div class="user-box">
+
+            <div class="user-avatar owner-avatar">
+                <i class="fa-solid fa-user"></i>
+            </div>
+
+            <div>
+
+                <strong id="ownerUserName">
+                    Land Owner
+                </strong>
+
+                <small>Land Owner Portal</small>
+
+            </div>
+
+        </div>
+
+
+        <nav class="sidebar-nav">
+
+            <p class="nav-label">MY PORTAL</p>
+
+
+            <button class="owner-nav-item active"
+                    data-owner-page="ownerHome">
+
+                <i class="fa-solid fa-house"></i>
+                Home
+
+            </button>
+
+
+            <button class="owner-nav-item"
+                    data-owner-page="myLand">
+
+                <i class="fa-solid fa-wheat-awn"></i>
+                My Land
+
+            </button>
+
+
+            <button class="owner-nav-item"
+                    data-owner-page="myApplications">
+
+                <i class="fa-solid fa-file-lines"></i>
+                My Applications
+
+            </button>
+
+
+            <button class="owner-nav-item"
+                    data-owner-page="acquisitionStatus">
+
+                <i class="fa-solid fa-timeline"></i>
+                Acquisition Status
+
+            </button>
+
+
+            <button class="owner-nav-item"
+                    data-owner-page="compensation">
+
+                <i class="fa-solid fa-indian-rupee-sign"></i>
+                Compensation
+
+            </button>
+
+
+            <button class="owner-nav-item"
+                    data-owner-page="documents">
+
+                <i class="fa-solid fa-folder-open"></i>
+                Documents
+
+            </button>
+
+
+            <button class="owner-nav-item"
+                    data-owner-page="notifications">
+
+                <i class="fa-solid fa-bell"></i>
+                Notifications
+
+            </button>
+
+
+            <p class="nav-label">SUPPORT</p>
+
+
+            <button class="owner-nav-item"
+                    data-owner-page="support">
+
+                <i class="fa-solid fa-circle-question"></i>
+                Help & Support
+
+            </button>
+
+
+            <button class="owner-nav-item"
+                    data-owner-page="ownerProfile">
+
+                <i class="fa-solid fa-user-gear"></i>
+                Profile
+
+            </button>
+
+        </nav>
+
+
+        <button class="logout-btn" onclick="logout()">
+
+            <i class="fa-solid fa-right-from-bracket"></i>
+
+            Logout
+
+        </button>
+
+    </aside>
+
+
+    <main class="main-content">
+
+        <header class="topbar">
+
+            <div>
+
+                <button class="mobile-menu">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+
+                <h2 id="ownerPageTitle">
+                    My Land Portal
+                </h2>
+
+                <p>
+                    Manage your land and acquisition information
+                </p>
+
+            </div>
+
+
+            <div class="topbar-right">
+
+                <button class="notification-btn"
+                        onclick="showOwnerPage('notifications')">
+
+                    <i class="fa-regular fa-bell"></i>
+
+                    <span>2</span>
+
+                </button>
+
+                <div class="top-profile">
+
+                    <div class="user-avatar small owner-avatar">
+                        <i class="fa-solid fa-user"></i>
+                    </div>
+
+                    <span id="topOwnerName">
+                        Land Owner
+                    </span>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <div id="ownerPageContent">
+
+
+            <!-- OWNER HOME -->
+
+            <div id="ownerHome"
+                 class="page-section active-page">
+
+                <div class="welcome-banner owner-banner">
+
+                    <div>
+
+                        <p>Land Owner Portal</p>
+
+                        <h1>
+                            Welcome, <span id="welcomeOwnerName">
+                            Land Owner
+                            </span>
+                        </h1>
+
+                        <span>
+                            Track your land, applications and
+                            compensation from one place.
+                        </span>
+
+                    </div>
+
+                    <i class="fa-solid fa-house"></i>
+
+                </div>
+
+
+                <div class="stats-grid">
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon">
+                            <i class="fa-solid fa-wheat-awn"></i>
+                        </div>
+
+                        <div>
+                            <span>My Land Parcels</span>
+                            <strong>3</strong>
+                            <small>All registered</small>
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon">
+                            <i class="fa-solid fa-file-lines"></i>
+                        </div>
+
+                        <div>
+                            <span>Applications</span>
+                            <strong>2</strong>
+                            <small>1 under review</small>
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon warning">
+                            <i class="fa-solid fa-clock"></i>
+                        </div>
+
+                        <div>
+                            <span>Acquisition Cases</span>
+                            <strong>1</strong>
+                            <small>Action required</small>
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon">
+                            <i class="fa-solid fa-indian-rupee-sign"></i>
+                        </div>
+
+                        <div>
+                            <span>Compensation</span>
+                            <strong>Pending</strong>
+                            <small>Assessment in progress</small>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="dashboard-grid">
+
+                    <div class="panel large-panel">
+
+                        <div class="panel-header">
+
+                            <div>
+                                <h3>Current Acquisition</h3>
+                                <p>NH Expansion Project</p>
+                            </div>
+
+                            <span class="status warning-status">
+                                In Progress
+                            </span>
+
+                        </div>
+
+
+                        <div class="timeline">
+
+                            <div class="timeline-step completed">
+                                <div class="timeline-dot">✓</div>
+                                <div>
+                                    <strong>Project Identified</strong>
+                                    <span>Completed</span>
+                                </div>
+                            </div>
+
+
+                            <div class="timeline-step completed">
+                                <div class="timeline-dot">✓</div>
+                                <div>
+                                    <strong>Land Survey</strong>
+                                    <span>Completed</span>
+                                </div>
+                            </div>
+
+
+                            <div class="timeline-step completed">
+                                <div class="timeline-dot">✓</div>
+                                <div>
+                                    <strong>Ownership Verification</strong>
+                                    <span>Completed</span>
+                                </div>
+                            </div>
+
+
+                            <div class="timeline-step current">
+                                <div class="timeline-dot">4</div>
+                                <div>
+                                    <strong>Compensation Assessment</strong>
+                                    <span>Currently Processing</span>
+                                </div>
+                            </div>
+
+
+                            <div class="timeline-step">
+                                <div class="timeline-dot">5</div>
+                                <div>
+                                    <strong>Compensation Payment</strong>
+                                    <span>Pending</span>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="panel">
+
+                        <div class="panel-header">
+
+                            <div>
+                                <h3>Notifications</h3>
+                                <p>Recent updates</p>
+                            </div>
+
+                        </div>
+
+
+                        <div class="owner-notifications">
+
+                            <div>
+                                <i class="fa-solid fa-file-circle-check"></i>
+
+                                <span>
+                                    Ownership verification completed.
+                                </span>
+
+                            </div>
+
+                            <div>
+                                <i class="fa-solid fa-indian-rupee-sign"></i>
+
+                                <span>
+                                    Compensation assessment started.
+                                </span>
+
+                            </div>
+
+                            <div>
+                                <i class="fa-solid fa-calendar"></i>
+
+                                <span>
+                                    Survey record updated.
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- MY LAND -->
+
+            <div id="myLand" class="page-section">
+
+                <div class="page-header">
+
+                    <div>
+                        <h2>My Land</h2>
+                        <p>View your registered land parcels</p>
+                    </div>
+
+                </div>
+
+
+                <div class="land-cards">
+
+                    <div class="land-card">
+
+                        <div class="land-card-header">
+
+                            <span class="parcel-id">
+                                WB-KOL-28471
+                            </span>
+
+                            <span class="status success">
+                                Verified
+                            </span>
+
+                        </div>
+
+                        <h3>Maheshtala, West Bengal</h3>
+
+                        <div class="land-details">
+
+                            <div>
+                                <span>Area</span>
+                                <strong>2.4 Acres</strong>
+                            </div>
+
+                            <div>
+                                <span>Survey No.</span>
+                                <strong>145/2</strong>
+                            </div>
+
+                            <div>
+                                <span>Land Type</span>
+                                <strong>Agricultural</strong>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="land-card">
+
+                        <div class="land-card-header">
+
+                            <span class="parcel-id">
+                                WB-KOL-28472
+                            </span>
+
+                            <span class="status success">
+                                Verified
+                            </span>
+
+                        </div>
+
+                        <h3>Behala, West Bengal</h3>
+
+                        <div class="land-details">
+
+                            <div>
+                                <span>Area</span>
+                                <strong>1.1 Acres</strong>
+                            </div>
+
+                            <div>
+                                <span>Survey No.</span>
+                                <strong>88/4</strong>
+                            </div>
+
+                            <div>
+                                <span>Land Type</span>
+                                <strong>Residential</strong>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="land-card">
+
+                        <div class="land-card-header">
+
+                            <span class="parcel-id">
+                                WB-KOL-28473
+                            </span>
+
+                            <span class="status success">
+                                Verified
+                            </span>
+
+                        </div>
+
+                        <h3>Joka, West Bengal</h3>
+
+                        <div class="land-details">
+
+                            <div>
+                                <span>Area</span>
+                                <strong>0.8 Acres</strong>
+                            </div>
+
+                            <div>
+                                <span>Survey No.</span>
+                                <strong>201/7</strong>
+                            </div>
+
+                            <div>
+                                <span>Land Type</span>
+                                <strong>Agricultural</strong>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- APPLICATIONS -->
+
+            <div id="myApplications" class="page-section">
+
+                <div class="page-header">
+
+                    <div>
+                        <h2>My Applications</h2>
+                        <p>Track submitted applications</p>
+                    </div>
+
+                </div>
+
+
+                <div class="table-panel">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+                                <th>Application ID</th>
+                                <th>Parcel</th>
+                                <th>Purpose</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            <tr>
+                                <td>APP-2026-1042</td>
+                                <td>WB-KOL-28471</td>
+                                <td>Land Acquisition</td>
+                                <td>28 Aug 2026</td>
+                                <td>
+                                    <span class="status warning-status">
+                                        Under Review
+                                    </span>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>APP-2026-0981</td>
+                                <td>WB-KOL-28472</td>
+                                <td>Ownership Update</td>
+                                <td>14 Aug 2026</td>
+                                <td>
+                                    <span class="status success">
+                                        Approved
+                                    </span>
+                                </td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+
+            <!-- ACQUISITION STATUS -->
+
+            <div id="acquisitionStatus" class="page-section">
+
+                <div class="page-header">
+
+                    <div>
+                        <h2>Acquisition Status</h2>
+                        <p>Track the complete acquisition process</p>
+                    </div>
+
+                </div>
+
+
+                <div class="status-tracker">
+
+                    <div class="tracker-step completed">
+                        <div>✓</div>
+                        <strong>Identification</strong>
+                        <span>Completed</span>
+                    </div>
+
+                    <div class="tracker-line completed-line"></div>
+
+                    <div class="tracker-step completed">
+                        <div>✓</div>
+                        <strong>Survey</strong>
+                        <span>Completed</span>
+                    </div>
+
+                    <div class="tracker-line completed-line"></div>
+
+                    <div class="tracker-step completed">
+                        <div>✓</div>
+                        <strong>Verification</strong>
+                        <span>Completed</span>
+                    </div>
+
+                    <div class="tracker-line"></div>
+
+                    <div class="tracker-step current">
+                        <div>4</div>
+                        <strong>Compensation</strong>
+                        <span>In Progress</span>
+                    </div>
+
+                    <div class="tracker-line"></div>
+
+                    <div class="tracker-step">
+                        <div>5</div>
+                        <strong>Payment</strong>
+                        <span>Pending</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- COMPENSATION -->
+
+            <div id="compensation" class="page-section">
+
+                <div class="page-header">
+
+                    <div>
+                        <h2>Compensation</h2>
+                        <p>View compensation assessment and payment status</p>
+                    </div>
+
+                </div>
+
+
+                <div class="compensation-card">
+
+                    <div class="compensation-icon">
+                        <i class="fa-solid fa-indian-rupee-sign"></i>
+                    </div>
+
+                    <div>
+
+                        <span>Estimated Compensation</span>
+
+                        <strong>
+                            ₹18,40,000
+                        </strong>
+
+                        <p>
+                            Assessment is currently being processed.
+                        </p>
+
+                    </div>
+
+                    <span class="status warning-status">
+                        Processing
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- DOCUMENTS -->
+
+            <div id="documents" class="page-section">
+
+                <div class="page-header">
+
+                    <div>
+                        <h2>Documents</h2>
+                        <p>Access your land-related documents</p>
+                    </div>
+
+                </div>
+
+
+                <div class="document-list">
+
+                    <div class="document-item">
+
+                        <i class="fa-solid fa-file-pdf"></i>
+
+                        <div>
+                            <strong>Land Ownership Record</strong>
+                            <span>Updated 02 Sep 2026</span>
+                        </div>
+
+                        <button onclick="notifyUser('Demo document opened.')">
+                            View
+                        </button>
+
+                    </div>
+
+
+                    <div class="document-item">
+
+                        <i class="fa-solid fa-file-lines"></i>
+
+                        <div>
+                            <strong>Acquisition Notice</strong>
+                            <span>Updated 29 Aug 2026</span>
+                        </div>
+
+                        <button onclick="notifyUser('Demo document opened.')">
+                            View
+                        </button>
+
+                    </div>
+
+
+                    <div class="document-item">
+
+                        <i class="fa-solid fa-file-invoice-dollar"></i>
+
+                        <div>
+                            <strong>Compensation Assessment</strong>
+                            <span>Updated 03 Sep 2026</span>
+                        </div>
+
+                        <button onclick="notifyUser('Demo document opened.')">
+                            View
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- NOTIFICATIONS -->
+
+            <div id="notifications" class="page-section">
+
+                <div class="page-header">
+
+                    <div>
+                        <h2>Notifications</h2>
+                        <p>Important updates regarding your land</p>
+                    </div>
+
+                </div>
+
+
+                <div class="notification-list">
+
+                    <div class="full-notification">
+                        <i class="fa-solid fa-circle-check"></i>
+                        <div>
+                            <strong>Ownership Verification Completed</strong>
+                            <p>
+                                Your ownership information has been successfully verified.
+                            </p>
+                            <small>Today</small>
+                        </div>
+                    </div>
+
+
+                    <div class="full-notification">
+                        <i class="fa-solid fa-indian-rupee-sign"></i>
+                        <div>
+                            <strong>Compensation Assessment Started</strong>
+                            <p>
+                                Your compensation assessment is currently being processed.
+                            </p>
+                            <small>Yesterday</small>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- SUPPORT -->
+
+            <div id="support" class="page-section">
+
+                <div class="page-header">
+
+                    <div>
+                        <h2>Help & Support</h2>
+                        <p>Get assistance with your land-related queries</p>
+                    </div>
+
+                </div>
+
+
+                <div class="support-grid">
+
+                    <div class="support-card">
+
+                        <i class="fa-solid fa-phone"></i>
+
+                        <h3>Helpline</h3>
+
+                        <p>
+                            Contact the land acquisition support team.
+                        </p>
+
+                        <strong>1800-XXX-XXXX</strong>
+
+                    </div>
+
+
+                    <div class="support-card">
+
+                        <i class="fa-solid fa-envelope"></i>
+
+                        <h3>Email Support</h3>
+
+                        <p>
+                            Submit your query through email.
+                        </p>
+
+                        <strong>support@bhoomidrishti.gov</strong>
+
+                    </div>
+
+
+                    <div class="support-card">
+
+                        <i class="fa-solid fa-location-dot"></i>
+
+                        <h3>Office Support</h3>
+
+                        <p>
+                            Find your nearest land administration office.
+                        </p>
+
+                        <button class="outline-btn"
+                                onclick="notifyUser('Office locator opened.')">
+                            Find Office
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- PROFILE -->
+
+            <div id="ownerProfile" class="page-section">
+
+                <div class="page-header">
+
+                    <div>
+                        <h2>My Profile</h2>
+                        <p>Your registered information</p>
+                    </div>
+
+                </div>
+
+
+                <div class="profile-panel">
+
+                    <div class="profile-avatar">
+                        <i class="fa-solid fa-user"></i>
+                    </div>
+
+                    <div class="profile-info">
+
+                        <div>
+                            <span>Name</span>
+                            <strong id="profileOwnerName">
+                                Land Owner
+                            </strong>
+                        </div>
+
+                        <div>
+                            <span>Government ID</span>
+                            <strong id="profileOwnerGovId">
+                                Registered ID
+                            </strong>
+                        </div>
+
+                        <div>
+                            <span>Email</span>
+                            <strong id="profileOwnerEmail">
+                                -
+                            </strong>
+                        </div>
+
+                        <div>
+                            <span>Phone</span>
+                            <strong id="profileOwnerPhone">
+                                -
+                            </strong>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+</section>
+
+
+<!-- =========================================================
+     TOAST
+========================================================= -->
+
+<div id="toast" class="toast">
+
+    <i class="fa-solid fa-circle-check"></i>
+
+    <span id="toastMessage">
+        Success
+    </span>
+
+</div>
+
+
+<!-- =========================================================
+     MODAL
+========================================================= -->
+
+<div id="projectModal" class="modal hidden">
+
+    <div class="modal-card">
+
+        <div class="modal-header">
+
+            <h2>Create New Project</h2>
+
+            <button onclick="closeProjectModal()">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+        </div>
+
+        <div class="form-group">
+
+            <label>Project Name</label>
+
+            <input id="newProjectName"
+                   placeholder="Enter project name">
+
+        </div>
+
+        <div class="form-group">
+
+            <label>Location</label>
+
+            <input id="newProjectLocation"
+                   placeholder="State / District">
+
+        </div>
+
+        <button class="primary-btn"
+                onclick="createProject()">
+
+            Create Project
+
+        </button>
+
+    </div>
+
+</div>
+
+
+<script src="script.js"></script>
+
+</body>
+</html>
